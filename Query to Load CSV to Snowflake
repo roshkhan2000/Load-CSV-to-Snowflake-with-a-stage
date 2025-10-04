@@ -1,13 +1,13 @@
 /* Step 1: Create a schema
    A schema is like a folder in your database. It helps organize your tables, stages, and other objects.
-   Here we create a schema called 'beginner_demo' to keep all objects related to this tutorial together.
+   Here we create a schema called 'r_ beginner_demo' to keep all objects related to this tutorial together.
 */
-CREATE SCHEMA beginner_demo;
+CREATE SCHEMA r_ beginner_demo;
 
 /* Step 2: Set your working schema
-   This tells Snowflake that any objects we create (tables, stages, etc.) should be placed inside the schema 'beginner_demo'.
+   This tells Snowflake that any objects we create (tables, stages, etc.) should be placed inside the schema 'r_ beginner_demo'.
 */
-USE TIL_PORTFOLIO_PROJECTS.beginner_demo;
+USE database_name.r_ beginner_demo;
 
 /* Step 3: Create a file format
    A file format defines how Snowflake should interpret the CSV file when loading it.
