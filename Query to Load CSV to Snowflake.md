@@ -1,20 +1,18 @@
+```sql
 /* Step 1: Create a schema
    A schema is like a folder in your database. It helps organize your tables, stages, and other objects.
-   Here we create a schema called 'r_ beginner_demo' to keep all objects related to this tutorial together.
-*/
+   Here we create a schema called 'r_ beginner_demo' to keep all objects related to this tutorial together.*/
 CREATE SCHEMA r_ beginner_demo;
 
 /* Step 2: Set your working schema
-   This tells Snowflake that any objects we create (tables, stages, etc.) should be placed inside the schema 'r_ beginner_demo'.
-*/
+   This tells Snowflake that any objects we create (tables, stages, etc.) should be placed inside the schema 'r_ beginner_demo'.*/
 USE database_name.r_ beginner_demo;
 
 /* Step 3: Create a file format
    A file format defines how Snowflake should interpret the CSV file when loading it.
    - TYPE = 'CSV': indicates the file type
    - SKIP_HEADER = 1: ignores the first line of the file, which usually contains column headers
-   - FIELD_OPTIONALLY_ENCLOSED_BY = '"': handles fields that are wrapped in quotes
-*/
+   - FIELD_OPTIONALLY_ENCLOSED_BY = '"': handles fields that are wrapped in quotes*/
 CREATE OR REPLACE FILE FORMAT file_format_csv
   TYPE = 'CSV'
   SKIP_HEADER = 1
@@ -22,8 +20,7 @@ CREATE OR REPLACE FILE FORMAT file_format_csv
 
 /* Step 4: Create a stage
    A stage is a temporary storage area in Snowflake where you upload files before loading them into a table.
-   We are creating an internal stage called 'stage_olympics_data' and associating it with the file format we just defined.
-*/
+   We are creating an internal stage called 'stage_olympics_data' and associating it with the file format we just defined.*/
 CREATE OR REPLACE STAGE stage_olympics_data
   FILE_FORMAT = file_format_csv;
 
@@ -34,14 +31,13 @@ CREATE OR REPLACE STAGE stage_olympics_data
     * Select your Database, Schema, and Stage.
     * Click Upload.
     Optional: Verify your file is in the stage: LIST @stage_olympics_data;
-    You should see your CSV listed. Now the file is ready to be loaded into your table.
-*/
+    You should see your CSV listed. Now the file is ready to be loaded into your table.*/
 
 /* Step 6: Create a table
    The table is where the data from the CSV file will ultimately reside.
    We define the columns in the table to match the data in the CSV.
-   For beginners, using VARCHAR for most fields is fine. You can adjust data types later for accuracy.
-*/
+   For beginners, using VARCHAR for most fields is fine. You can adjust data types later for accuracy.*/
+
 CREATE OR REPLACE TABLE table_olympics_data (
     athlete_id BIGINT,
     athlete_name VARCHAR(1024),
@@ -65,15 +61,16 @@ CREATE OR REPLACE TABLE table_olympics_data (
 /* Step 7: Load data from the stage into the table
    COPY INTO reads files from the stage and inserts the data into the table.
    - FROM @stage_olympics_data: tells Snowflake where to find the CSV file
-   - FILE_FORMAT: specifies how the CSV should be interpreted
-*/
+   - FILE_FORMAT: specifies how the CSV should be interpreted*/
+
 COPY INTO table_olympics_data
 FROM @stage_olympics_data
 FILE_FORMAT = (FORMAT_NAME = file_format_csv);
 
 /* Step 8: Verify that the data has loaded
-   This query selects the first 100 rows from the table so you can check that the data loaded correctly and the columns match your expectations.
-*/
+   This query selects the first 100 rows from the table so you can check that the data loaded correctly and the columns match your expectations.*/
+
 SELECT *
 FROM table_olympics_data
 LIMIT 100;
+```
